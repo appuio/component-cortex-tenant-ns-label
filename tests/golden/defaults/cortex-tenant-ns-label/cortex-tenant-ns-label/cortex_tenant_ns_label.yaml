@@ -1,0 +1,186 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations: {}
+  labels:
+    name: cortex-tenant-ns-label-namespace-reader
+  name: cortex-tenant-ns-label:namespace-reader
+rules:
+  - apiGroups:
+      - ''
+    resources:
+      - namespaces
+    verbs:
+      - get
+      - list
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations: {}
+  labels:
+    name: syn-cortex-tenant-ns-label
+  name: syn-cortex-tenant-ns-label
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations: {}
+  labels:
+    name: cortex-tenant-ns-label
+  name: cortex-tenant-ns-label
+  namespace: syn-cortex-tenant-ns-label
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations: {}
+  labels:
+    name: cortex-tenant-ns-label-namespace-reader
+  name: cortex-tenant-ns-label-namespace-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cortex-tenant-ns-label:namespace-reader
+subjects:
+  - kind: ServiceAccount
+    name: cortex-tenant-ns-label
+    namespace: syn-cortex-tenant-ns-label
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations: {}
+  labels:
+    name: cortex-tenant-ns-label
+  name: cortex-tenant-ns-label
+  namespace: syn-cortex-tenant-ns-label
+spec:
+  minReadySeconds: 30
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: cortex-tenant-ns-label
+      name: cortex-tenant-ns-label
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations: {}
+      labels:
+        app: cortex-tenant-ns-label
+        name: cortex-tenant-ns-label
+    spec:
+      containers:
+        - args: []
+          env: []
+          envFrom:
+            - secretRef:
+                name: cortex-tenant-ns-label
+          image: ghcr.io/vshn/cortex-tenant-ns-label:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /alive
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          name: cortex-tenant-ns-label
+          ports:
+            - containerPort: 8080
+              name: http
+          resources:
+            limits:
+              cpu: '5'
+              memory: 256Mi
+            requests:
+              cpu: 500m
+              memory: 256Mi
+          stdin: false
+          tty: false
+          volumeMounts: []
+      imagePullSecrets: []
+      initContainers: []
+      serviceAccountName: cortex-tenant-ns-label
+      terminationGracePeriodSeconds: 30
+      volumes: []
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations: {}
+  labels:
+    name: cortex-tenant-ns-label
+  name: cortex-tenant-ns-label
+  namespace: syn-cortex-tenant-ns-label
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: cortex-tenant-ns-label
+    name: cortex-tenant-ns-label
+  type: ClusterIP
+---
+apiVersion: v1
+data: {}
+kind: Secret
+metadata:
+  annotations: {}
+  labels:
+    name: cortex-tenant-ns-label
+  name: cortex-tenant-ns-label
+  namespace: syn-cortex-tenant-ns-label
+stringData:
+  CONFIG: |
+    listen: 0.0.0.0:8080
+    target: https://metrics-receive/v1/push
+    log_level: warn
+    auth:
+      egress:
+        username: 'user'
+        password: 'pass'
+    namespace:
+      tenant_label: 'organization'
+type: Opaque
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  annotations: {}
+  labels:
+    name: allow-from-prometheus
+  name: allow-from-prometheus
+  namespace: syn-cortex-tenant-ns-label
+spec:
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              prometheus: k8s
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: openshift-monitoring
+      ports:
+        - port: 8080
+          protocol: TCP
+    - from:
+        - podSelector:
+            matchLabels:
+              prometheus: user-workload
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: openshift-user-workload-monitoring-namespace
+      ports:
+        - port: 8080
+          protocol: TCP
+  podSelector:
+    matchLabels:
+      name: cortex-tenant-ns-label
+  policyTypes:
+    - Ingress

@@ -1,0 +1,11 @@
+parameters:
+  kapitan:
+    compile:
+      - input_paths:
+          - cortex-tenant-ns-label/component/app.jsonnet
+        input_type: jsonnet
+        output_path: apps/
+      - input_paths:
+          - cortex-tenant-ns-label/component/main.jsonnet
+        input_type: jsonnet
+        output_path: cortex-tenant-ns-label/

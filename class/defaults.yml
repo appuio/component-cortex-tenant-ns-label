@@ -1,0 +1,24 @@
+parameters:
+  cortex_tenant_ns_label:
+    app_name: 'cortex-tenant-ns-label'
+    namespace: 'syn-cortex-tenant-ns-label'
+    image:
+      registry: ghcr.io
+      repository: vshn/cortex-tenant-ns-label
+      tag: 'latest'
+    requests:
+      cpu: '500m'
+      memory: '256Mi'
+    limits:
+      cpu: '5'
+      memory: '256Mi'
+    config: |
+      listen: 0.0.0.0:8080
+      target: https://metrics-receive/v1/push
+      log_level: warn
+      auth:
+        egress:
+          username: 'user'
+          password: 'pass'
+      namespace:
+        tenant_label: 'organization'
