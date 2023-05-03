@@ -12,7 +12,7 @@ parameters:
     limits:
       cpu: '5'
       memory: '256Mi'
-    config: |
+    config:
       listen: 0.0.0.0:8080
       target: https://metrics-receive/v1/push
       log_level: warn

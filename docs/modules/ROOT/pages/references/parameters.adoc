@@ -13,8 +13,21 @@ Configure the deployment name of the cortex-tenant-ns-label reverse proxy.
 == `config`
 
 [horizontal]
-type:: string
-default:: ``
+type:: dict
+default::
++
+[source,yaml]
+----
+listen: 0.0.0.0:8080
+target: https://metrics-receive/v1/push
+log_level: warn
+auth:
+  egress:
+    username: 'user'
+    password: 'pass'
+namespace:
+  tenant_label: 'organization'
+----
 example::
 +
 [source,yaml]
@@ -30,7 +43,7 @@ auth:
     tenant_label: 'appuio.io/organization'
 ----
 
-Configure the cortex-tenant-ns-label reverse proxy. See https://github.com/vshn/cortex-tenant-ns-label for more details.
+Configure the cortex-tenant-ns-label reverse proxy. See https://github.com/vshn/cortex-tenant-ns-label for more details. All configuration is merged with the defaults.
 
 == `image`
 

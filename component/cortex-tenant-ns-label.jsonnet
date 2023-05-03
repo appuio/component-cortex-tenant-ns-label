@@ -14,7 +14,7 @@ local namespace = kube.Namespace(params.namespace);
 
 local secret = kube.Secret(params.app_name) + namespace_meta {
   stringData: {
-    CONFIG: params.config,
+    CONFIG: std.manifestYamlDoc(params.config),
   },
 };
 
