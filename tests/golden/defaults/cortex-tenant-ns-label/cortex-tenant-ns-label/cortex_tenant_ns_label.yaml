@@ -137,16 +137,16 @@ metadata:
   name: cortex-tenant-ns-label
   namespace: syn-cortex-tenant-ns-label
 stringData:
-  CONFIG: |
-    listen: 0.0.0.0:8080
-    target: https://metrics-receive/v1/push
-    log_level: warn
-    auth:
-      egress:
-        username: 'user'
-        password: 'pass'
-    namespace:
-      tenant_label: 'organization'
+  CONFIG: |-
+    "auth":
+      "egress":
+        "password": "pass"
+        "username": "user"
+    "listen": "0.0.0.0:8080"
+    "log_level": "warn"
+    "namespace":
+      "tenant_label": "organization"
+    "target": "https://metrics-receive/v1/push"
 type: Opaque
 ---
 apiVersion: networking.k8s.io/v1
