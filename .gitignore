@@ -17,7 +17,3 @@
 # Antora
 /_archive
 /_public
-
-# Additional entries
-manifests_requiring_prerendering/
-jsonnetfile.json
