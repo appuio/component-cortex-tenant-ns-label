@@ -7,7 +7,7 @@ For documentation on Project Syn and this component, see https://syn.tools.
 
 ## Documentation
 
-The rendered documentation for this component is available on the [Commodore Components Hub](https://hub.syn.tools/openshift4-monitoring).
+The rendered documentation for this component is available on the [Commodore Components Hub](https://hub.syn.tools/cortex-tenant-ns-label).
 
 Documentation for this component is written using [Asciidoc][asciidoc] and [Antora][antora].
 It is located in the [docs/](docs) folder.

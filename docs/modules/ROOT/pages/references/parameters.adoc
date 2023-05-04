@@ -1,0 +1,97 @@
+= Parameters
+
+The parent key for all of the following parameters is `cortex_tenant_ns_label`.
+
+== `app_name`
+
+[horizontal]
+type:: string
+default:: `cortex-tenant-ns-label`
+
+Configure the deployment name of the cortex-tenant-ns-label reverse proxy.
+
+== `config`
+
+[horizontal]
+type:: dict
+default::
++
+[source,yaml]
+----
+listen: 0.0.0.0:8080
+target: https://metrics-receive/v1/push
+log_level: warn
+auth:
+  egress:
+    username: 'user'
+    password: 'pass'
+namespace:
+  tenant_label: 'organization'
+----
+example::
++
+[source,yaml]
+----
+listen: 0.0.0.0:8080
+target: https://metrics-receive.appuio.net/api/v1/push
+log_level: warn
+auth:
+  egress:
+    username: ?{vaultkv:__shared__/__shared__/metrics-receive-appuio-net-remote-write/username}
+    password: ?{vaultkv:__shared__/__shared__/metrics-receive-appuio-net-remote-write/password}
+  namespace:
+    tenant_label: 'appuio.io/organization'
+----
+
+Configure the cortex-tenant-ns-label reverse proxy. See https://github.com/vshn/cortex-tenant-ns-label for more details. All configuration is merged with the defaults.
+
+== `image`
+
+[horizontal]
+type:: dict
+default::
++
+[source,yaml]
+----
+registry: ghcr.io
+repository: vshn/cortex-tenant-ns-label
+tag: 'latest'
+----
+
+Configure the image source for the cortex-tenant-ns-label reverse proxy.
+
+== `limits`
+
+[horizontal]
+type:: dict
+default::
++
+[source,yaml]
+----
+cpu: '5'
+memory: '256Mi'
+----
+
+Configure the maximum resources for the cortex-tenant-ns-label reverse proxy.
+
+== `namespace`
+
+[horizontal]
+type:: string
+default:: `syn-cortex-tenant-ns-label`
+
+Configure the namespace used to deploy the cortex-tenant-ns-label reverse proxy.
+
+== `requests`
+
+[horizontal]
+type:: dict
+default::
++
+[source,yaml]
+----
+cpu: '500m'
+memory: '256Mi'
+----
+
+Configure the reserved resources for the cortex-tenant-ns-label reverse proxy.

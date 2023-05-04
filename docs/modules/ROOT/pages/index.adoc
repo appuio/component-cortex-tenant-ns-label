@@ -1,0 +1,5 @@
+= cortex-tenant-ns-label
+
+cortex-tenant-ns-label is a Commodore component to manage the cortex-tenant-ns-label proxy.
+
+See the xref:references/parameters.adoc[parameters] reference for further details.
