@@ -7,10 +7,10 @@ parameters:
       repository: vshn/cortex-tenant-ns-label
       tag: 'latest'
     requests:
-      cpu: '500m'
+      cpu: '100m'
       memory: '256Mi'
     limits:
-      cpu: '5'
+      cpu: '1'
       memory: '256Mi'
     config:
       listen: 0.0.0.0:8080
