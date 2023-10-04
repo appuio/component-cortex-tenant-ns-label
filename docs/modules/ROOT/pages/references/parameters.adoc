@@ -95,3 +95,16 @@ memory: '256Mi'
 ----
 
 Configure the reserved resources for the cortex-tenant-ns-label reverse proxy.
+
+== `replicas`
+
+[horizontal]
+type:: int
+default::
++
+[source,yaml]
+----
+replicas: 1
+----
+
+Configure the replicas for the cortex-tenant-ns-label reverse proxy.

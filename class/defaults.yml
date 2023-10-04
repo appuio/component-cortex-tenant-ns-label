@@ -12,6 +12,7 @@ parameters:
     limits:
       cpu: '1'
       memory: '256Mi'
+    replicas: 1
     config:
       listen: 0.0.0.0:8080
       target: https://metrics-receive/v1/push
