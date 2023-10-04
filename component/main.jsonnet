@@ -21,6 +21,7 @@ local secret = kube.Secret(params.app_name) + namespace_meta {
 
 local deployment = kube.Deployment('cortex-tenant-ns-label') + namespace_meta {
   spec+: {
+    replicas: params.replicas,
     template+: {
       metadata+: {
         labels+: {
